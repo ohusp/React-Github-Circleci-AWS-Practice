@@ -1,39 +1,20 @@
 version: 2.1
 orbs:
-  aws-s3: circleci/aws-s3@3.0
+  aws-s3: circleci/aws-s3@3.0.0
 jobs:
-  build:
+  build_deploy:
     docker:
-      - image: cimg/node:17.2.0
+      # replace with your preferred image
       - image: circleci/node:14.15.0
-
-    working_directory: ~/repo
-
     steps:
       - checkout
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-            - ~/.npm
-            - ~/.cache
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run: yarn test
-
-      - run: yarn build
-
-      - aws-s3/sync:
+      - run: yarn install && yarn build
+      - run: aws s3 sync build s3://circleci-mydas-test
+      - aws-s3/copy:
           from: build
           to: "s3://react-circleci/"
-          arguments: |
-            --acl public-read \
-            --cache-control "max-age=86400"
-          overwrite: true
+
+workflows:
+  example-workflow:
+    jobs:
+      - build_deploy
