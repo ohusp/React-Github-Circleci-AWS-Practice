@@ -4,7 +4,6 @@ orbs:
 jobs:
   build:
     docker:
-      - image: 'circleci/python:3.6'
       - image: circleci/node:14.15.0-browsers
 
     working_directory: ~/repo
