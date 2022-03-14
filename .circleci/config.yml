@@ -5,8 +5,8 @@ jobs:
   build_deploy:
     docker:
       # replace with your preferred image
-      - image: 'cimg/python:3.6'
       - image: circleci/node:14.15.0
+      - image: 'cimg/python:3.6'
     steps:
       - checkout
       - run: yarn install && yarn build
