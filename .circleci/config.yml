@@ -1,9 +1,10 @@
 version: 2.1
 orbs:
-  aws-s3: circleci/aws-s3@1.0.11
+  aws-s3: circleci/aws-s3@3.0
 jobs:
   build:
     docker:
+      - image: cimg/node:17.2.0
       - image: circleci/node:14.15.0
 
     working_directory: ~/repo
