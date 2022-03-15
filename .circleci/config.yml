@@ -10,10 +10,10 @@ jobs:
     steps:
       - checkout
       - run: yarn install && yarn build
+      - run: aws-s3 sync build/ s3://react-circleci
       - aws-s3/copy:
           from: build
           to: "s3://react-circleci"
-
 
 workflows:
   example-workflow:
