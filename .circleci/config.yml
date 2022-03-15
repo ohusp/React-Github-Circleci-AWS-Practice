@@ -11,7 +11,7 @@ jobs:
       - run: cd ./app && yarn install && yarn build
       - aws-s3/copy:
           from: cd ./app/build
-          to: "s3://react-circleci"
+          to: "https://react-circleci.s3.eu-west-3.amazonaws.com/"
 
 workflows:
   example-workflow:
