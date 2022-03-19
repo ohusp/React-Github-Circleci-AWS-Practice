@@ -6,12 +6,13 @@ jobs:
     docker:
       # replace with your preferred image
       - image: circleci/node:14.15.0
+      - image: cimg/python:3.10.2
     steps:
       - checkout
       - run: cd ./app && yarn install && yarn build
       - aws-s3/copy:
           from: cd ./app/build
-          to: "https://react-circleci.s3.eu-west-3.amazonaws.com/"
+          to: "s3://react-circleci"
 
 workflows:
   example-workflow:
